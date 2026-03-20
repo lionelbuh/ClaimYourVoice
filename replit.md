@@ -94,3 +94,42 @@ Generated React Query hooks and fetch client from the OpenAPI spec (e.g. `useHea
 ### `scripts` (`@workspace/scripts`)
 
 Utility scripts package. Each script is a `.ts` file in `src/` with a corresponding npm script in `package.json`. Run scripts via `pnpm --filter @workspace/scripts run <script>`. Scripts can import any workspace package (e.g., `@workspace/db`) by adding it as a dependency in `scripts/package.json`.
+
+### `artifacts/claim-your-voice` (`@workspace/claim-your-voice`)
+
+React + Vite SPA for **ClaimYourVoice** (claimyourvoice.org) — a Selective Mutism (SM) mentorship & support platform. Rebranded from TouchConnectPro; all structure, auth, Stripe, database schema and routing are preserved.
+
+**Key branding/copy conventions:**
+- SM Warriors = people living with Selective Mutism (or their families)
+- SM Guides = experienced mentors (lived experience or professional background)
+- SM Specialists = licensed clinicians (speech therapists, psychologists, educators)
+- Supporters = advocates/funders
+- Members Circle = $9.99/mo plan; Intensive Circle = $49/mo plan; Community = Free
+- SM Journey Score = the core quiz/assessment (from `FounderFocusScore.tsx`)
+- All 42 intake questions in `src/lib/constants.ts` are SM-specific
+- Quiz tracks in `src/lib/founderFocusData.ts`: Adult with SM, Parent/Caregiver, Supporter/Professional
+- Logo: inline text "C" gradient circle + "ClaimYourVoice" span in `src/components/Layout.tsx`
+- `src/config.ts`: `API_BASE_URL = ""` (same-origin, monorepo setup)
+- `@assets` alias → `../../attached_assets` (workspace root)
+
+**Internal field names (NOT changed — DB schema compliance):**
+- `entrepreneur_*` fields → used internally for SM Warrior data
+- `mentor_*` fields → used internally for SM Guide data
+- `coach_*` / `specialist_*` → SM Specialist data
+- `investor_*` → Supporter data
+- Keys like `ideaName`, `idealCustomer`, `targetMarket` etc. in the 42-question form → keep as-is internally
+
+**Pages updated with SM copy:**
+- `Home.tsx`, `HowItWorks.tsx`, `Pricing.tsx`, `QA.tsx` — fully SM-specific
+- `BecomeaMentor.tsx`, `BecomeaCoach.tsx`, `BecomeaInvestor.tsx`, `BecomeaEntrepreneur.tsx` — hero/intro/forms updated
+- `DashboardEntrepreneur.tsx` — onboarding needs options updated
+- `src/lib/constants.ts` — all 42 IDEA_PROPOSAL_QUESTIONS are SM journey questions
+- `src/lib/founderFocusData.ts` — all quiz questions and BLOCKER_INFO are SM-specific
+
+**Environment variables required:**
+- `SUPABASE_URL`, `SUPABASE_ANON_KEY` — authentication
+- `RESEND_API_KEY` — email (from: hello@claimyourvoice.org)
+- `STRIPE_SECRET_KEY` — payments
+- `DATABASE_URL` — PostgreSQL
+- `OPENAI_API_KEY` — AI rephrasing
+- `NORO_PASSWORD` — admin access

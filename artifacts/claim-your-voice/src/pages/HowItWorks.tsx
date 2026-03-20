@@ -1,0 +1,203 @@
+import { Button } from "@/components/ui/button";
+import { ArrowRight, Lightbulb, UserCheck, Rocket, TrendingUp, Check } from "lucide-react";
+import { Link } from "wouter";
+
+export default function HowItWorks() {
+  return (
+    <div className="flex flex-col">
+      {/* Hero */}
+      <section className="pt-20 pb-14 md:pt-24 md:pb-20" style={{ backgroundColor: "#FAF9F7" }}>
+        <div className="container px-4 mx-auto max-w-3xl text-center">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold leading-snug tracking-tight mb-5" style={{ color: "#0D566C" }} data-testid="text-hiw-headline">
+            How It Works
+          </h1>
+          <p className="text-xl md:text-2xl font-display font-medium mb-4" style={{ color: "#4B3F72" }}>
+            A clear, compassionate path forward for every SM journey.
+          </p>
+          <p className="text-lg max-w-2xl mx-auto leading-relaxed" style={{ color: "#4A4A4A" }}>
+            We help you understand where you are, connect with the right guide, and move forward with real support — one step at a time.
+          </p>
+        </div>
+      </section>
+
+      {/* Phase 1 */}
+      <section className="py-20 md:py-24" style={{ backgroundColor: "#F3F3F3" }} data-testid="section-phase-1">
+        <div className="container px-4 mx-auto max-w-4xl">
+          <div className="flex flex-col md:flex-row items-start gap-10">
+            <div className="shrink-0">
+              <div className="w-16 h-16 rounded-2xl flex items-center justify-center" style={{ backgroundColor: "rgba(245,197,66,0.15)" }}>
+                <Lightbulb className="h-8 w-8" style={{ color: "#F5C542" }} />
+              </div>
+            </div>
+            <div className="flex-1">
+              <p className="text-sm font-bold uppercase tracking-wider mb-2" style={{ color: "#FF6B5C" }}>Phase 1</p>
+              <h2 className="text-2xl md:text-3xl font-display font-bold mb-4" style={{ color: "#0D566C" }}>Take Your SM Journey Score — Free</h2>
+              <p className="text-lg leading-relaxed mb-6" style={{ color: "#4A4A4A" }}>
+                Start by understanding where you actually are. No clinical jargon. No judgment. Use our free SM Journey Score to get a clear, honest picture of your current situation and what to focus on next.
+              </p>
+              <ul className="space-y-3 mb-8">
+                {[
+                  "Understand your current stage in the SM journey",
+                  "Identify your biggest blockers and areas of strength",
+                  "Get personalized next steps based on your unique situation",
+                ].map((item, i) => (
+                  <li key={i} className="flex items-center gap-3">
+                    <div className="w-6 h-6 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: "rgba(245,197,66,0.2)" }}>
+                      <Check className="h-3.5 w-3.5" style={{ color: "#0D566C" }} />
+                    </div>
+                    <span className="font-medium" style={{ color: "#4A4A4A" }}>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <Link href="/member-focus">
+                <Button
+                  className="h-12 px-8 text-base font-semibold rounded-full transition-all duration-200 hover:shadow-lg hover:scale-[1.03] active:scale-[0.98]"
+                  style={{ backgroundColor: "#FF6B5C", color: "#FFFFFF", border: "none" }}
+                  data-testid="button-phase1-cta"
+                >
+                  Take the SM Journey Score <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Phase 2 */}
+      <section className="py-20 md:py-24" style={{ backgroundColor: "#FAF9F7" }} data-testid="section-phase-2">
+        <div className="container px-4 mx-auto max-w-4xl">
+          <div className="flex flex-col md:flex-row items-start gap-10">
+            <div className="shrink-0">
+              <div className="w-16 h-16 rounded-2xl flex items-center justify-center" style={{ backgroundColor: "rgba(75,63,114,0.1)" }}>
+                <UserCheck className="h-8 w-8" style={{ color: "#4B3F72" }} />
+              </div>
+            </div>
+            <div className="flex-1">
+              <p className="text-sm font-bold uppercase tracking-wider mb-2" style={{ color: "#FF6B5C" }}>Phase 2</p>
+              <h2 className="text-2xl md:text-3xl font-display font-bold mb-2" style={{ color: "#0D566C" }}>Get Matched With an SM Guide</h2>
+              <p className="text-sm font-semibold mb-4 inline-block px-4 py-1.5 rounded-full" style={{ backgroundColor: "rgba(13,86,108,0.08)", color: "#0D566C" }}>
+                Membership: Community — FREE
+              </p>
+              <p className="text-lg leading-relaxed mb-3" style={{ color: "#4A4A4A" }}>
+                When you're ready, submit your SM journey profile for review. A dedicated SM Guide evaluates it and, if the fit is right, welcomes you into their circle of support.
+              </p>
+              <p className="text-lg leading-relaxed mb-6 font-medium" style={{ color: "#4B3F72" }}>
+                This is where your guided journey truly begins.
+              </p>
+              <ul className="space-y-3">
+                {[
+                  "Receive clear, compassionate feedback on your situation",
+                  "Set meaningful, achievable goals together",
+                  "Start moving forward with purpose and direction",
+                ].map((item, i) => (
+                  <li key={i} className="flex items-center gap-3">
+                    <div className="w-6 h-6 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: "rgba(245,197,66,0.2)" }}>
+                      <Check className="h-3.5 w-3.5" style={{ color: "#0D566C" }} />
+                    </div>
+                    <span className="font-medium" style={{ color: "#4A4A4A" }}>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Phase 3 */}
+      <section className="py-20 md:py-24" style={{ backgroundColor: "#F3F3F3" }} data-testid="section-phase-3">
+        <div className="container px-4 mx-auto max-w-4xl">
+          <div className="flex flex-col md:flex-row items-start gap-10">
+            <div className="shrink-0">
+              <div className="w-16 h-16 rounded-2xl flex items-center justify-center" style={{ backgroundColor: "rgba(245,197,66,0.15)" }}>
+                <Rocket className="h-8 w-8" style={{ color: "#F5C542" }} />
+              </div>
+            </div>
+            <div className="flex-1">
+              <p className="text-sm font-bold uppercase tracking-wider mb-2" style={{ color: "#FF6B5C" }}>Phase 3</p>
+              <h2 className="text-2xl md:text-3xl font-display font-bold mb-2" style={{ color: "#0D566C" }}>Build Momentum With Ongoing Support</h2>
+              <p className="text-sm font-semibold mb-4 inline-block px-4 py-1.5 rounded-full" style={{ backgroundColor: "rgba(13,86,108,0.08)", color: "#0D566C" }}>
+                Membership: $9.99 per month
+              </p>
+              <p className="text-lg leading-relaxed mb-6" style={{ color: "#4A4A4A" }}>
+                You now unlock full support: regular guidance sessions, SM-specific learning resources, community connection, and optional access to specialists in speech therapy, anxiety, and school support.
+              </p>
+              <ul className="space-y-3">
+                {[
+                  "Step-by-step SM resources to help you progress faster",
+                  "Direct access to your Guide throughout the month",
+                  "Access to SM Specialists for deeper therapeutic support",
+                ].map((item, i) => (
+                  <li key={i} className="flex items-center gap-3">
+                    <div className="w-6 h-6 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: "rgba(245,197,66,0.2)" }}>
+                      <Check className="h-3.5 w-3.5" style={{ color: "#0D566C" }} />
+                    </div>
+                    <span className="font-medium" style={{ color: "#4A4A4A" }}>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Phase 4 */}
+      <section className="py-20 md:py-24" style={{ backgroundColor: "#FAF9F7" }} data-testid="section-phase-4">
+        <div className="container px-4 mx-auto max-w-4xl">
+          <div className="flex flex-col md:flex-row items-start gap-10">
+            <div className="shrink-0">
+              <div className="w-16 h-16 rounded-2xl flex items-center justify-center" style={{ backgroundColor: "rgba(75,63,114,0.1)" }}>
+                <TrendingUp className="h-8 w-8" style={{ color: "#4B3F72" }} />
+              </div>
+            </div>
+            <div className="flex-1">
+              <p className="text-sm font-bold uppercase tracking-wider mb-2" style={{ color: "#FF6B5C" }}>Phase 4</p>
+              <h2 className="text-2xl md:text-3xl font-display font-bold mb-2" style={{ color: "#0D566C" }}>Become a Voice — Intensive Circle</h2>
+              <p className="text-sm font-semibold mb-4 inline-block px-4 py-1.5 rounded-full" style={{ backgroundColor: "rgba(13,86,108,0.08)", color: "#0D566C" }}>
+                Membership: $49 per month
+              </p>
+              <p className="text-lg leading-relaxed mb-6" style={{ color: "#4A4A4A" }}>
+                For those ready for intensive, structured support. We help you prepare a personalized long-term SM action plan, connect with specialist practitioners, and build the confidence to share your voice in every area of life.
+              </p>
+              <ul className="space-y-3">
+                {[
+                  "Comprehensive, personalized SM action plan",
+                  "Priority matching with top SM Specialists",
+                  "Visibility to our Supporter network for advocacy & funding",
+                ].map((item, i) => (
+                  <li key={i} className="flex items-center gap-3">
+                    <div className="w-6 h-6 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: "rgba(245,197,66,0.2)" }}>
+                      <Check className="h-3.5 w-3.5" style={{ color: "#0D566C" }} />
+                    </div>
+                    <span className="font-medium" style={{ color: "#4A4A4A" }}>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="py-20 md:py-28" style={{ backgroundColor: "#0D566C" }} data-testid="section-hiw-cta">
+        <div className="container px-4 mx-auto max-w-3xl text-center">
+          <h2 className="text-3xl md:text-4xl font-display font-bold mb-5 text-white">
+            Ready to take the first step?
+          </h2>
+          <p className="text-lg md:text-xl mb-10 leading-relaxed" style={{ color: "rgba(255,255,255,0.85)" }}>
+            Take your free SM Journey Score today and begin moving forward with clarity and compassion.
+          </p>
+          <Link href="/member-focus">
+            <Button
+              size="lg"
+              className="h-14 px-10 text-lg font-semibold rounded-full shadow-lg transition-all duration-200 hover:shadow-xl hover:scale-[1.03] active:scale-[0.98]"
+              style={{ backgroundColor: "#FF6B5C", color: "#FFFFFF", border: "none" }}
+              data-testid="button-hiw-cta"
+            >
+              Get started <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+          </Link>
+        </div>
+      </section>
+    </div>
+  );
+}
