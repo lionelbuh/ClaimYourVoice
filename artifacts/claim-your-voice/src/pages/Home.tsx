@@ -1,297 +1,452 @@
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Target, BarChart3, BookOpen, Eye, Compass, CheckCircle, Quote } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
-import { useState, useEffect } from "react";
 
-const rotatingGroups = [
-  ["No more silence.", "No more going it alone.", "No more wondering if it gets better."],
-  ["Children with Selective Mutism.", "Teens finding their voice.", "Adults reclaiming their confidence."],
-  ["Clarity about where you are.", "Guidance for what comes next.", "A community that truly gets it."],
-  ["Families seeking answers.", "SM Warriors ready for change.", "People who deserve to be heard."],
-];
+const GREEN_DARK   = "#085041";
+const GREEN_MID    = "#1D9E75";
+const GREEN_LIGHT  = "#9FE1CB";
+const GREEN_PALE   = "#E1F5EE";
+const GREEN_PALEST = "#f4fbf8";
+const PURPLE       = "#534AB7";
+const TEAL         = "#3AADA8";
+const TEXT         = "#0d2b24";
+const MUTED        = "#5a7a72";
+const BORDER       = "#c8e8df";
 
-const founderQuotes = [
+const testimonials = [
   {
-    quote: "I finally understood where my child was on their SM journey. The assessment gave us a clear starting point in just a few minutes.",
+    text: "I finally understood where my child was on their SM journey. The assessment gave us a real starting point, not more confusion. For the first time, I felt like someone actually got it.",
     name: "Sarah L.",
-    role: "Parent of an SM Warrior",
+    role: "Parent of a child with SM",
+    initial: "S",
+    color: GREEN_DARK,
   },
   {
-    quote: "I've lived with Selective Mutism for 20 years. Having a Guide who truly understands made all the difference — I finally felt seen.",
+    text: "I've lived with Selective Mutism for 20 years. Having a Voice Mentor who truly understands, not a therapist reading from a manual, made all the difference. I finally felt seen.",
     name: "Marcus T.",
-    role: "Adult SM Warrior",
+    role: "Adult living with SM",
+    initial: "M",
+    color: PURPLE,
+  },
+  {
+    text: "As a teen, I thought I was the only one. Finding this community changed that. People here don't try to fix you. They walk alongside you. That's everything.",
+    name: "Amelia R.",
+    role: "Teen navigating SM",
+    initial: "A",
+    color: TEAL,
   },
 ];
 
-export default function Home() {
-  const [groupIndex, setGroupIndex] = useState(0);
-  const [visible, setVisible] = useState(true);
+const steps = [
+  {
+    num: "1",
+    title: "Take your SM Journey Score",
+    desc: "5 minutes. Honest questions. A clear picture of where you are and what matters most right now.",
+  },
+  {
+    num: "2",
+    title: "Connect with a Voice Mentor",
+    desc: "Browse real people who have lived the SM experience. Find someone whose story resonates with yours.",
+  },
+  {
+    num: "3",
+    title: "Move forward together",
+    desc: "Ask questions, join discussions, and follow a path built around your pace. Not someone else's timeline.",
+  },
+];
+
+const pillars = [
+  { icon: "🌱", title: "Understand your journey", desc: "SM-specific tools that meet you where you are" },
+  { icon: "📈", title: "Track your progress",      desc: "See what's working at your own pace" },
+  { icon: "🤝", title: "Learn from lived experience", desc: "Real insights from people who've been there" },
+  { icon: "💬", title: "Never alone again",         desc: "A community that truly understands SM" },
+];
+
+function ScoreCard() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [animated, setAnimated] = useState(false);
+  const [widths, setWidths] = useState(["0%", "0%", "0%"]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setVisible(false);
-      setTimeout(() => {
-        setGroupIndex((prev) => (prev + 1) % rotatingGroups.length);
-        setVisible(true);
-      }, 600);
-    }, 4500);
-    return () => clearInterval(interval);
-  }, []);
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !animated) {
+          setAnimated(true);
+          setTimeout(() => setWidths(["62%", "45%", "38%"]), 100);
+        }
+      },
+      { threshold: 0.3 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [animated]);
+
+  const bars = [
+    { label: "Clarity",    value: widths[0] },
+    { label: "Readiness", value: widths[1] },
+    { label: "Support",   value: widths[2] },
+  ];
 
   return (
-    <div className="flex flex-col">
-      {/* Hero Section */}
-      <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden pt-10" style={{ backgroundColor: "#FAF9F7" }}>
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full opacity-[0.08]" style={{ background: "radial-gradient(circle, #0D566C 0%, transparent 70%)" }} />
-          <div className="absolute -bottom-20 -left-20 w-[400px] h-[400px] rounded-full opacity-[0.06]" style={{ background: "radial-gradient(circle, #FF6B5C 0%, transparent 70%)" }} />
-        </div>
+    <div ref={ref} style={{ background: "white", borderRadius: 20, padding: "36px" }}>
+      <div style={{ fontFamily: "'DM Serif Display', serif", fontSize: 22, color: GREEN_DARK, marginBottom: 8 }}>
+        Your SM Journey Score
+      </div>
+      <div style={{ fontSize: 13, color: MUTED, fontWeight: 300, lineHeight: 1.6, marginBottom: 24 }}>
+        Answer a few honest questions and see a clear picture of where your journey stands today.
+      </div>
 
-        <div className="container relative z-10 px-4 text-center max-w-4xl mx-auto">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold leading-snug tracking-tight mb-4" style={{ color: "#0D566C" }} data-testid="text-hero-headline">
-            Built for people with Selective Mutism who are ready to find their voice.
-          </h1>
-          <p className="text-lg md:text-xl mb-6 max-w-2xl mx-auto" style={{ color: "#4A4A4A" }}>
-            Find out where you are on your SM journey, what's holding you back, and what to do next — in 5 minutes.
-          </p>
-          <div className="min-h-[100px] flex items-center justify-center mb-8" data-testid="text-hero-rotating">
-            <div
-              className="transition-all duration-500 ease-in-out"
-              style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(12px)" }}
-            >
-              {rotatingGroups[groupIndex].map((line, i) => (
-                <p key={i} className="text-lg md:text-xl font-medium leading-relaxed" style={{ color: "#4A4A4A" }}>
-                  {line}
-                </p>
-              ))}
+      <div style={{ display: "flex", flexDirection: "column", gap: 14, marginBottom: 28 }}>
+        {bars.map((bar) => (
+          <div key={bar.label}>
+            <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, fontWeight: 500, color: TEXT, marginBottom: 6 }}>
+              <span>{bar.label}</span>
+              <span style={{ color: GREEN_MID, fontSize: 11 }}>pending</span>
             </div>
-          </div>
-          <Link href="/member-focus">
-            <Button
-              size="lg"
-              className="h-14 px-10 text-lg font-semibold rounded-full shadow-lg transition-all duration-200 hover:shadow-xl hover:scale-[1.03] active:scale-[0.98]"
-              style={{ backgroundColor: "#FF6B5C", color: "#FFFFFF", border: "none" }}
-              data-testid="button-hero-cta"
-            >
-              Take the SM Journey Score <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
-          </Link>
-          <p className="mt-4 text-sm" style={{ color: "#8A8A8A" }}>Free. 5 minutes. No clinical jargon. Just clarity.</p>
-        </div>
-      </section>
-
-      {/* Social Proof */}
-      <section className="py-12 md:py-16" style={{ backgroundColor: "#F3F3F3" }} data-testid="section-social-proof">
-        <div className="container px-4 mx-auto max-w-4xl">
-          <div className="grid md:grid-cols-2 gap-6">
-            {founderQuotes.map((item, i) => (
-              <div key={i} className="bg-white rounded-2xl p-6 relative" style={{ boxShadow: "0 2px 12px rgba(224,224,224,0.5)" }} data-testid={`card-quote-${i}`}>
-                <Quote className="h-8 w-8 mb-3 opacity-20" style={{ color: "#0D566C" }} />
-                <p className="text-base leading-relaxed mb-4 italic" style={{ color: "#4A4A4A" }}>
-                  "{item.quote}"
-                </p>
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white" style={{ backgroundColor: "#0D566C" }}>
-                    {item.name.charAt(0)}
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold" style={{ color: "#0D566C" }}>{item.name}</p>
-                    <p className="text-xs" style={{ color: "#8A8A8A" }}>{item.role}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* SM Journey Score Section */}
-      <section className="py-20 md:py-28" style={{ backgroundColor: "#FAF9F7" }} data-testid="section-member-focus">
-        <div className="container px-4 mx-auto max-w-4xl">
-          <div className="text-center mb-10">
-            <div className="w-14 h-14 rounded-xl mx-auto flex items-center justify-center mb-5" style={{ backgroundColor: "rgba(255,107,92,0.12)" }}>
-              <Target className="h-7 w-7" style={{ color: "#FF6B5C" }} />
-            </div>
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4" style={{ color: "#0D566C" }}>
-              Your SM Journey Score
-            </h2>
-            <p className="text-lg max-w-2xl mx-auto mb-2" style={{ color: "#4A4A4A" }}>
-              A free assessment built for those affected by Selective Mutism. Answer a few honest questions and get a clear picture of where your journey actually stands today.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6 mb-10 max-w-3xl mx-auto">
-            {[
-              { title: "See your blind spots", desc: "Find out what's really holding you back, not what you think is." },
-              { title: "Get a personalized snapshot", desc: "Your score breaks down clarity, readiness, and next steps in plain language." },
-              { title: "Know what to do next", desc: "No vague advice. You get a specific starting point based on your answers." },
-            ].map((item, i) => (
-              <div key={i} className="bg-white rounded-2xl p-6 text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-lg" style={{ boxShadow: "0 2px 12px rgba(224,224,224,0.5)" }} data-testid={`card-focus-benefit-${i}`}>
-                <CheckCircle className="h-8 w-8 mx-auto mb-3" style={{ color: "#FF6B5C" }} />
-                <h3 className="text-base font-bold mb-2" style={{ color: "#0D566C" }}>{item.title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: "#4A4A4A" }}>{item.desc}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="text-center">
-            <Link href="/member-focus">
-              <Button
-                size="lg"
-                className="h-14 px-10 text-lg font-semibold rounded-full shadow-lg transition-all duration-200 hover:shadow-xl hover:scale-[1.03] active:scale-[0.98]"
-                style={{ backgroundColor: "#FF6B5C", color: "#FFFFFF", border: "none" }}
-                data-testid="button-focus-score-cta"
-              >
-                Take the SM Journey Score <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
-            <p className="mt-4 text-sm" style={{ color: "#8A8A8A" }}>No sign-up required to start. Results are instant.</p>
-          </div>
-        </div>
-      </section>
-
-      {/* What Is ClaimYourVoice Section */}
-      <section className="py-20 md:py-28" style={{ backgroundColor: "#F3F3F3" }} data-testid="section-what-is-tcp">
-        <div className="container px-4 mx-auto max-w-4xl">
-          <div className="text-center mb-10">
-            <div className="w-12 h-12 rounded-xl mx-auto flex items-center justify-center mb-5" style={{ backgroundColor: "rgba(245,197,66,0.15)" }}>
-              <Compass className="h-6 w-6" style={{ color: "#F5C542" }} />
-            </div>
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-6" style={{ color: "#0D566C" }}>
-              What Happens After Your Score?
-            </h2>
-          </div>
-          <div className="space-y-6 text-lg leading-relaxed max-w-3xl mx-auto" style={{ color: "#4A4A4A" }}>
-            <p>
-              Your SM Journey Score is the starting point. What comes next is what makes the real difference.
-            </p>
-            <p>
-              ClaimYourVoice connects you with experienced SM Guides and Specialists who truly understand Selective Mutism. They help you go from "I don't know where to start" to "I have a clear, compassionate plan."
-            </p>
-            <p>
-              You get structured, evidence-informed guidance — not generic advice. Every step is built around where you are right now on your SM journey.
-            </p>
-          </div>
-          <div className="mt-12 grid md:grid-cols-3 gap-6 max-w-3xl mx-auto">
-            {[
-              { num: "1", text: "Take your SM Journey Score and see where you are" },
-              { num: "2", text: "Get matched with an SM Guide who fits your needs" },
-              { num: "3", text: "Move forward with structure, compassion, and real support" },
-            ].map((step) => (
-              <div key={step.num} className="flex items-center gap-3 bg-white rounded-xl p-4" style={{ boxShadow: "0 2px 10px rgba(224,224,224,0.5)" }}>
-                <div className="w-9 h-9 rounded-full flex items-center justify-center shrink-0 font-bold text-sm" style={{ backgroundColor: "rgba(245,197,66,0.2)", color: "#0D566C" }}>
-                  {step.num}
-                </div>
-                <p className="text-sm font-medium" style={{ color: "#4A4A4A" }}>{step.text}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* How It Works Section */}
-      <section className="py-20 md:py-28" style={{ backgroundColor: "#FAF9F7" }} data-testid="section-features">
-        <div className="container px-4 mx-auto max-w-5xl">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4" style={{ color: "#0D566C" }}>
-              How It Works
-            </h2>
-            <p className="text-lg max-w-2xl mx-auto" style={{ color: "#4A4A4A" }}>
-              Simple tools and real guidance to help you move forward with confidence.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: <Eye className="h-7 w-7" />,
-                title: "Understand Your Journey",
-                desc: "Get simple, SM-specific tools that help you see exactly where you are — without feeling overwhelmed.",
-              },
-              {
-                icon: <BarChart3 className="h-7 w-7" />,
-                title: "Track Your Progress",
-                desc: "See what's working and what still needs support, so you can move forward with confidence and compassion.",
-              },
-              {
-                icon: <BookOpen className="h-7 w-7" />,
-                title: "Learn from SM Warriors",
-                desc: "Real insights and practical guidance from people who have lived the SM experience and come out stronger.",
-              },
-            ].map((feature, i) => (
+            <div style={{ height: 6, background: GREEN_PALE, borderRadius: 100, overflow: "hidden" }}>
               <div
-                key={i}
-                className="bg-white rounded-2xl p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
-                style={{ boxShadow: "0 2px 12px rgba(224,224,224,0.6)" }}
-                data-testid={`card-feature-${i}`}
-              >
-                <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-5" style={{ backgroundColor: "rgba(245,197,66,0.15)" }}>
-                  <span style={{ color: "#F5C542" }}>{feature.icon}</span>
-                </div>
-                <h3 className="text-xl font-bold mb-3" style={{ color: "#0D566C" }}>{feature.title}</h3>
-                <p className="leading-relaxed" style={{ color: "#4A4A4A" }}>{feature.desc}</p>
-              </div>
+                style={{
+                  height: "100%",
+                  width: bar.value,
+                  borderRadius: 100,
+                  background: GREEN_MID,
+                  transition: "width 1.2s ease",
+                }}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <Link href="/member-focus">
+        <button
+          style={{
+            display: "block",
+            width: "100%",
+            background: GREEN_MID,
+            color: "white",
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: 14,
+            fontWeight: 600,
+            padding: "14px",
+            borderRadius: 100,
+            textAlign: "center",
+            border: "none",
+            cursor: "pointer",
+          }}
+        >
+          Take the SM Journey Score
+        </button>
+      </Link>
+      <div style={{ textAlign: "center", fontSize: 11, color: MUTED, marginTop: 10 }}>
+        No sign-up required to start. Results are instant.
+      </div>
+    </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <div style={{ background: GREEN_PALEST, color: TEXT, fontFamily: "'DM Sans', sans-serif" }}>
+
+      {/* ── HERO ── */}
+      <section style={{ position: "relative", padding: "100px 24px 80px", textAlign: "center", overflow: "hidden" }}>
+        <div style={{
+          position: "absolute", top: -120, left: "50%", transform: "translateX(-50%)",
+          width: 800, height: 600,
+          background: "radial-gradient(ellipse at 50% 40%, #9FE1CB30 0%, #534AB710 50%, transparent 75%)",
+          pointerEvents: "none",
+        }} />
+
+        <div style={{ position: "relative", zIndex: 1 }}>
+          <div style={{
+            display: "inline-flex", alignItems: "center", gap: 8,
+            fontSize: 11, fontWeight: 600, letterSpacing: "2.5px", textTransform: "uppercase",
+            color: GREEN_MID, background: GREEN_PALE,
+            padding: "7px 18px", borderRadius: 100, marginBottom: 28,
+          }}>
+            <span style={{
+              width: 6, height: 6, borderRadius: "50%", background: GREEN_MID,
+              display: "inline-block",
+            }} />
+            Selective Mutism Community
+          </div>
+
+          <h1 style={{
+            fontFamily: "'DM Serif Display', serif",
+            fontSize: "clamp(40px, 7vw, 72px)",
+            lineHeight: 1.08,
+            color: GREEN_DARK,
+            maxWidth: 760,
+            margin: "0 auto 24px",
+          }}>
+            You don't have to figure out<br/>
+            <em style={{ fontStyle: "italic", color: GREEN_MID }}>SM alone anymore.</em>
+          </h1>
+
+          <p style={{ fontSize: 18, fontWeight: 300, color: MUTED, maxWidth: 540, margin: "0 auto 16px", lineHeight: 1.7 }}>
+            A warm, moderated community where people living with Selective Mutism, and the families who love them, find real understanding, real guidance, and a real path forward.
+          </p>
+
+          <div style={{
+            display: "flex", flexWrap: "wrap", justifyContent: "center",
+            gap: 10, margin: "24px auto 36px", maxWidth: 560,
+          }}>
+            {["Teens navigating SM", "Adults living with SM", "Parents of children with SM", "Families & loved ones"].map((tag) => (
+              <span key={tag} style={{
+                fontSize: 13, fontWeight: 400, color: GREEN_DARK,
+                background: "white", border: `1px solid ${BORDER}`,
+                padding: "8px 18px", borderRadius: 100,
+              }}>
+                {tag}
+              </span>
             ))}
+          </div>
+
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
+            <Link href="/member-focus">
+              <button style={{
+                display: "inline-flex", alignItems: "center", gap: 10,
+                background: GREEN_DARK, color: "white",
+                fontFamily: "'DM Sans', sans-serif", fontSize: 15, fontWeight: 600,
+                padding: "16px 36px", borderRadius: 100,
+                border: "none", cursor: "pointer",
+                transition: "background 0.2s",
+              }}
+              onMouseEnter={e => (e.currentTarget.style.background = GREEN_MID)}
+              onMouseLeave={e => (e.currentTarget.style.background = GREEN_DARK)}
+              data-testid="button-hero-cta"
+              >
+                Take the SM Journey Score
+                <span style={{
+                  width: 18, height: 18, background: "rgba(255,255,255,0.2)", borderRadius: "50%",
+                  display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12,
+                }}>→</span>
+              </button>
+            </Link>
+            <span style={{ fontSize: 12, color: MUTED, fontWeight: 300, letterSpacing: "0.3px" }}>
+              Free. 5 minutes. No clinical jargon. Just clarity.
+            </span>
           </div>
         </div>
       </section>
 
-      {/* Why ClaimYourVoice / Mentorship Section */}
-      <section className="py-20 md:py-28" style={{ backgroundColor: "#F3F3F3" }} data-testid="section-why-tcp">
-        <div className="container px-4 mx-auto max-w-4xl">
-          <div className="flex flex-col md:flex-row items-center gap-12">
-            <div className="md:w-1/2">
-              <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6" style={{ backgroundColor: "rgba(75,63,114,0.1)" }}>
-                <Compass className="h-8 w-8" style={{ color: "#4B3F72" }} />
-              </div>
-              <h2 className="text-3xl md:text-4xl font-display font-bold mb-6" style={{ color: "#4B3F72" }}>
-                A human touch for every step of your journey
+      {/* ── SM JOURNEY SCORE ── */}
+      <div style={{ padding: "0 24px 80px" }} id="score">
+        <div style={{
+          background: GREEN_DARK, borderRadius: 32, padding: "72px 48px",
+          maxWidth: 1080, margin: "0 auto", position: "relative", overflow: "hidden",
+        }}>
+          <div style={{
+            position: "absolute", top: -80, right: -80,
+            width: 400, height: 400,
+            background: "radial-gradient(ellipse, #1D9E7520, transparent 70%)",
+            pointerEvents: "none",
+          }} />
+
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+            gap: 64, alignItems: "center",
+          }}>
+            <div>
+              <span style={{ fontSize: 11, fontWeight: 600, letterSpacing: "2.5px", textTransform: "uppercase", color: GREEN_LIGHT, display: "block", marginBottom: 16 }}>
+                SM Journey Score
+              </span>
+              <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "clamp(26px,3.5vw,38px)", color: "white", lineHeight: 1.15, marginBottom: 16 }}>
+                Find out where you are.<br/>
+                <em style={{ fontStyle: "italic", color: GREEN_LIGHT }}>Know what comes next.</em>
               </h2>
-              <p className="text-lg leading-relaxed" style={{ color: "#4A4A4A" }}>
-                SM is complex and deeply personal. Our SM Guides and Specialists bring lived experience, clinical knowledge, and genuine compassion. You'll never feel alone again. Every step forward is clear, purposeful, and built around you.
+              <p style={{ fontSize: 16, fontWeight: 300, color: GREEN_LIGHT, lineHeight: 1.75 }}>
+                A free assessment built specifically for people affected by Selective Mutism. No clinical language. No judgment. Just an honest, clear picture of where your SM journey stands today.
               </p>
-            </div>
-            <div className="md:w-1/2">
-              <div className="grid grid-cols-2 gap-4">
+
+              <div style={{ display: "flex", flexDirection: "column", gap: 20, marginTop: 32 }}>
                 {[
-                  { label: "Clarity", value: "See what matters" },
-                  { label: "Direction", value: "Know your next step" },
-                  { label: "Guidance", value: "Human mentorship" },
-                  { label: "Progress", value: "Measurable growth" },
-                ].map((item, i) => (
-                  <div key={i} className="bg-white rounded-xl p-5 text-center" style={{ boxShadow: "0 2px 12px rgba(224,224,224,0.5)" }}>
-                    <p className="font-bold mb-1" style={{ color: "#4B3F72" }}>{item.label}</p>
-                    <p className="text-sm" style={{ color: "#4A4A4A" }}>{item.value}</p>
+                  { icon: "🔍", title: "See your blind spots", desc: "Understand what's really holding you back, not just what you think it is. Whether it's you or your child." },
+                  { icon: "🧭", title: "Get a personalized snapshot", desc: "Your score breaks down clarity, readiness, and next steps in plain, human language." },
+                  { icon: "✦",  title: "Know your starting point", desc: "No vague advice. A specific, compassionate direction based on your answers. Not a textbook." },
+                ].map((f) => (
+                  <div key={f.title} style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
+                    <div style={{
+                      width: 36, height: 36, borderRadius: 10, background: "rgba(29,158,117,0.2)",
+                      display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, fontSize: 16,
+                    }}>{f.icon}</div>
+                    <div>
+                      <h4 style={{ fontSize: 14, fontWeight: 600, color: "white", marginBottom: 4 }}>{f.title}</h4>
+                      <p style={{ fontSize: 13, fontWeight: 300, color: GREEN_LIGHT, lineHeight: 1.6 }}>{f.desc}</p>
+                    </div>
                   </div>
                 ))}
               </div>
             </div>
+
+            <ScoreCard />
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* Call to Action Section */}
-      <section className="py-20 md:py-28" style={{ backgroundColor: "#0D566C" }} data-testid="section-cta">
-        <div className="container px-4 mx-auto max-w-3xl text-center">
-          <h2 className="text-3xl md:text-5xl font-display font-bold mb-6 text-white">
-            Stop overthinking. Start with your score.
+      {/* ── TESTIMONIALS ── */}
+      <div style={{ padding: "80px 24px" }}>
+        <div style={{ textAlign: "center", maxWidth: 560, margin: "0 auto 48px" }}>
+          <span style={{ fontSize: 11, fontWeight: 600, letterSpacing: "2.5px", textTransform: "uppercase", color: GREEN_MID, display: "block", marginBottom: 16 }}>
+            Real voices
+          </span>
+          <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "clamp(28px,4vw,44px)", color: GREEN_DARK, lineHeight: 1.15, margin: "0 auto" }}>
+            From people who <em style={{ fontStyle: "italic", color: GREEN_MID }}>know</em><br/>exactly how you feel
           </h2>
-          <p className="text-lg md:text-xl mb-10 leading-relaxed" style={{ color: "rgba(255,255,255,0.85)" }}>
-            Five minutes to find out where you stand, what's missing, and what to do first. It's free and the results are yours to keep.
-          </p>
-          <Link href="/member-focus">
-            <Button
-              size="lg"
-              className="h-14 px-10 text-lg font-semibold rounded-full shadow-lg transition-all duration-200 hover:shadow-xl hover:scale-[1.03] active:scale-[0.98]"
-              style={{ backgroundColor: "#FF6B5C", color: "#FFFFFF", border: "none" }}
-              data-testid="button-cta-get-started"
-            >
-              Take the SM Journey Score <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
-          </Link>
-          <p className="mt-4 text-sm" style={{ color: "rgba(255,255,255,0.6)" }}>No credit card. No sign-up to start. Just answers.</p>
         </div>
-      </section>
+
+        <div style={{
+          display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+          gap: 20, maxWidth: 1080, margin: "0 auto",
+        }}>
+          {testimonials.map((t) => (
+            <div key={t.name} style={{
+              background: "white", borderRadius: 20, padding: 32,
+              border: `1px solid ${BORDER}`,
+            }}>
+              <div style={{ fontFamily: "'DM Serif Display', serif", fontSize: 48, color: GREEN_LIGHT, lineHeight: 1, marginBottom: 8 }}>"</div>
+              <p style={{ fontSize: 15, fontWeight: 300, color: TEXT, lineHeight: 1.75, marginBottom: 24, fontStyle: "italic" }}>
+                {t.text}
+              </p>
+              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                <div style={{
+                  width: 40, height: 40, borderRadius: "50%", background: t.color,
+                  color: "white", fontSize: 14, fontWeight: 600,
+                  display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
+                }}>
+                  {t.initial}
+                </div>
+                <div>
+                  <div style={{ fontSize: 14, fontWeight: 600, color: GREEN_DARK }}>{t.name}</div>
+                  <div style={{ fontSize: 12, color: MUTED, fontWeight: 300 }}>{t.role}</div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ── HOW IT WORKS ── */}
+      <div style={{ padding: "0 24px 80px" }}>
+        <div style={{ background: "white", borderRadius: 32, padding: "72px 48px", maxWidth: 1080, margin: "0 auto" }}>
+
+          <div style={{ textAlign: "center", marginBottom: 56 }}>
+            <span style={{ fontSize: 11, fontWeight: 600, letterSpacing: "2.5px", textTransform: "uppercase", color: GREEN_MID, display: "block", marginBottom: 16 }}>
+              How it works
+            </span>
+            <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "clamp(28px,4vw,44px)", color: GREEN_DARK, lineHeight: 1.15, marginBottom: 16 }}>
+              Simple. Warm. <em style={{ fontStyle: "italic", color: GREEN_MID }}>Built around you.</em>
+            </h2>
+            <p style={{ fontSize: 16, fontWeight: 300, color: MUTED, lineHeight: 1.75, maxWidth: 560, margin: "0 auto" }}>
+              No complicated intake. No waiting lists. No clinical gatekeeping. Just a clear path from where you are to where you want to be.
+            </p>
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 32, marginBottom: 56 }}>
+            {steps.map((step) => (
+              <div key={step.num} style={{
+                textAlign: "center", padding: "32px 24px",
+                borderRadius: 16, background: GREEN_PALEST, border: `1px solid ${BORDER}`,
+              }}>
+                <div style={{
+                  width: 40, height: 40, borderRadius: "50%", background: GREEN_DARK, color: "white",
+                  fontSize: 16, fontWeight: 600, fontFamily: "'DM Serif Display', serif",
+                  display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 20px",
+                }}>
+                  {step.num}
+                </div>
+                <h3 style={{ fontSize: 16, fontWeight: 600, color: GREEN_DARK, marginBottom: 10 }}>{step.title}</h3>
+                <p style={{ fontSize: 14, fontWeight: 300, color: MUTED, lineHeight: 1.7 }}>{step.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 16, marginBottom: 48 }}>
+            {pillars.map((p) => (
+              <div key={p.title} style={{
+                textAlign: "center", padding: "24px 16px", borderRadius: 16, border: `1px solid ${BORDER}`,
+              }}>
+                <div style={{ fontSize: 24, marginBottom: 10 }}>{p.icon}</div>
+                <h4 style={{ fontSize: 13, fontWeight: 600, color: GREEN_DARK, marginBottom: 4 }}>{p.title}</h4>
+                <p style={{ fontSize: 12, color: MUTED, fontWeight: 300 }}>{p.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Mentor Strip */}
+          <div style={{
+            background: GREEN_PALE, borderRadius: 20, padding: 40,
+            display: "grid", gridTemplateColumns: "1fr auto", alignItems: "center", gap: 32,
+          }}>
+            <div>
+              <h3 style={{ fontFamily: "'DM Serif Display', serif", fontSize: 22, color: GREEN_DARK, marginBottom: 8 }}>
+                Our Voice Mentors are not therapists.<br/>They're people who truly get it.
+              </h3>
+              <p style={{ fontSize: 14, color: MUTED, fontWeight: 300, lineHeight: 1.7, maxWidth: 480 }}>
+                Every Voice Mentor on ClaimYourVoice.org has lived the SM experience, as a person with SM or as a family member walking that path. They're not here to fix you. They're here because they remember what it felt like to need someone who understood. They want to be that person for you.
+              </p>
+              <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 16 }}>
+                <span style={{ fontSize: 11, fontWeight: 600, letterSpacing: "1px", textTransform: "uppercase", padding: "5px 14px", borderRadius: 100, background: GREEN_DARK, color: "white" }}>
+                  Voice Mentor: lived SM experience
+                </span>
+                <span style={{ fontSize: 11, fontWeight: 600, letterSpacing: "1px", textTransform: "uppercase", padding: "5px 14px", borderRadius: 100, background: PURPLE, color: "white" }}>
+                  Family Mentor: parent or loved one
+                </span>
+              </div>
+            </div>
+            <Link href="/guides">
+              <button style={{
+                display: "inline-flex", alignItems: "center", gap: 8,
+                background: GREEN_DARK, color: "white",
+                fontFamily: "'DM Sans', sans-serif", fontSize: 14, fontWeight: 600,
+                padding: "14px 28px", borderRadius: 100,
+                border: "none", cursor: "pointer", whiteSpace: "nowrap",
+                transition: "background 0.2s",
+              }}
+              onMouseEnter={e => (e.currentTarget.style.background = GREEN_MID)}
+              onMouseLeave={e => (e.currentTarget.style.background = GREEN_DARK)}
+              >
+                Meet our Mentors →
+              </button>
+            </Link>
+          </div>
+
+        </div>
+      </div>
+
+      {/* ── FINAL CTA ── */}
+      <div style={{ textAlign: "center", padding: "100px 24px", maxWidth: 700, margin: "0 auto" }}>
+        <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "clamp(32px,5vw,52px)", color: GREEN_DARK, lineHeight: 1.15, marginBottom: 20 }}>
+          Five minutes to understand<br/>
+          <em style={{ fontStyle: "italic", color: GREEN_MID }}>where your journey really stands.</em>
+        </h2>
+        <p style={{ fontSize: 16, fontWeight: 300, color: MUTED, lineHeight: 1.7, marginBottom: 36 }}>
+          No sign-up. No clinical jargon. No pressure. Just a clear, compassionate starting point. Free, and yours to keep.
+        </p>
+        <Link href="/member-focus">
+          <button style={{
+            display: "inline-flex", alignItems: "center", gap: 10,
+            background: GREEN_DARK, color: "white",
+            fontFamily: "'DM Sans', sans-serif", fontSize: 15, fontWeight: 600,
+            padding: "16px 36px", borderRadius: 100,
+            border: "none", cursor: "pointer",
+          }}
+          onMouseEnter={e => (e.currentTarget.style.background = GREEN_MID)}
+          onMouseLeave={e => (e.currentTarget.style.background = GREEN_DARK)}
+          data-testid="button-cta-get-started"
+          >
+            Take the SM Journey Score
+            <span style={{
+              width: 18, height: 18, background: "rgba(255,255,255,0.2)", borderRadius: "50%",
+              display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12,
+            }}>→</span>
+          </button>
+        </Link>
+        <div style={{ fontSize: 12, color: MUTED, marginTop: 14 }}>Free. No credit card. No commitment.</div>
+      </div>
 
     </div>
   );

@@ -2,6 +2,7 @@ import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
+import logoImg from "@assets/logo_ClaimYourVoice.org_1774074568395.png";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
@@ -26,13 +27,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       {/* Navbar */}
       <nav className="sticky top-0 z-50 w-full border-b border-white/10 bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/60">
         <div className="container mx-auto px-4 h-24 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity" data-testid="link-logo">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-white text-sm" style={{ background: "linear-gradient(135deg, #0D566C, #FF6B5C)" }}>
-                C
-              </div>
-              <span className="font-display font-bold text-lg" style={{ color: "#0D566C" }}>ClaimYourVoice</span>
-            </div>
+          <Link href="/" className="flex items-center hover:opacity-80 transition-opacity" data-testid="link-logo">
+            <img src={logoImg} alt="ClaimYourVoice.org" className="h-12 w-auto" style={{ maxWidth: "220px" }} />
           </Link>
 
           {/* Desktop Links */}
@@ -109,11 +105,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <footer className="border-t border-border bg-muted/30 py-12" data-testid="footer">
         <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-white text-sm" style={{ background: "linear-gradient(135deg, #0D566C, #FF6B5C)" }}>
-                C
-              </div>
-              <span className="font-display font-bold text-lg" style={{ color: "#0D566C" }}>ClaimYourVoice</span>
+            <div>
+              <img src={logoImg} alt="ClaimYourVoice.org" className="h-12 w-auto" style={{ maxWidth: "200px" }} />
             </div>
             <p className="text-sm text-muted-foreground">
               <span className="font-bold">Connecting SM Warriors, Guides, and Supporters</span>
