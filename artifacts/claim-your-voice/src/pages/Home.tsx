@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
+import logoImg from "@assets/logo_ClaimYourVoice.org_1774074568395.png";
 
 const GREEN_DARK   = "#085041";
 const GREEN_MID    = "#1D9E75";
@@ -160,6 +161,10 @@ export default function Home() {
         }} />
 
         <div style={{ position: "relative", zIndex: 1 }}>
+          <div style={{ marginBottom: 28 }}>
+            <img src={logoImg} alt="ClaimYourVoice.org" style={{ height: 80, width: "auto", margin: "0 auto", display: "block" }} />
+          </div>
+
           <div style={{
             display: "inline-flex", alignItems: "center", gap: 8,
             fontSize: 11, fontWeight: 600, letterSpacing: "2.5px", textTransform: "uppercase",
