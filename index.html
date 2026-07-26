@@ -203,6 +203,23 @@
   .waitlist p{ font-size:17px; color:#EDEBFA; max-width:520px; margin:0 auto 28px; }
   .waitlist .btn{ background:var(--amber); color:var(--ink); }
   .waitlist .btn:hover{ background:#fff; }
+  .waitlist-form{
+    display:flex; gap:10px; justify-content:center; flex-wrap:wrap;
+    max-width:440px; margin:0 auto;
+  }
+  .waitlist-form input[type="email"]{
+    flex:1; min-width:220px; padding:14px 16px; border-radius:8px; border:none;
+    font-family:var(--sans); font-size:15px; color:var(--ink);
+  }
+  .waitlist-form input[type="email"]::placeholder{ color:#7A7A85; }
+  .waitlist-form button{
+    background:var(--amber); color:var(--ink); border:none; font-weight:700;
+    font-family:var(--sans); font-size:15px; padding:14px 24px; border-radius:8px;
+    cursor:pointer; transition:background .15s ease;
+  }
+  .waitlist-form button:hover{ background:#fff; }
+  .waitlist-hp{ position:absolute; left:-5000px; } /* honeypot, keep hidden */
+  .waitlist-note{ font-size:13px; color:#D8D3F2; margin-top:14px; }
 
   footer{
     padding:36px 24px; text-align:center; background:var(--ink); color:#B9CFC8;
@@ -382,13 +399,29 @@
   <div class="section-inner">
     <div class="lang-block" data-lang="fr">
       <h2>On se lance, un email à la fois</h2>
-      <p>On prépare un espace simple pour accompagner les familles francophones. Envoyez-nous un email pour rejoindre la liste d'attente. On vous répondra personnellement.</p>
-      <a class="btn" href="mailto:hello@claimyourvoice.org?subject=Liste%20d%27attente%20-%20Claim%20Your%20Voice">Envoyer un email</a>
+      <p>On prépare un espace simple pour accompagner les familles francophones. Laissez votre email pour rejoindre la liste d'attente. On vous répondra personnellement.</p>
+      <form action="https://switzerlandworld.us9.list-manage.com/subscribe/post?u=7f640e539e50d4f6eb8822540&amp;id=b352108053&amp;f_id=00c729e1f0" method="post" target="_blank" class="waitlist-form" novalidate>
+        <input type="email" name="EMAIL" placeholder="Votre adresse email" required>
+        <input type="hidden" name="tags" value="1040406">
+        <div class="waitlist-hp" aria-hidden="true">
+          <input type="text" name="b_7f640e539e50d4f6eb8822540_b352108053" tabindex="-1" value="">
+        </div>
+        <button type="submit" name="subscribe">Envoyer</button>
+      </form>
+      <p class="waitlist-note">On ne partage jamais votre email. Désinscription possible à tout moment.</p>
     </div>
     <div class="lang-block" data-lang="en">
       <h2>Getting started, one email at a time</h2>
-      <p>We're building a simple space to support French speaking families. Send us an email to join the waiting list. We will reply personally.</p>
-      <a class="btn" href="mailto:hello@claimyourvoice.org?subject=Waiting%20list%20-%20Claim%20Your%20Voice">Send an email</a>
+      <p>We're building a simple space to support French speaking families. Leave your email to join the waiting list. We will reply personally.</p>
+      <form action="https://switzerlandworld.us9.list-manage.com/subscribe/post?u=7f640e539e50d4f6eb8822540&amp;id=b352108053&amp;f_id=00c729e1f0" method="post" target="_blank" class="waitlist-form" novalidate>
+        <input type="email" name="EMAIL" placeholder="Your email address" required>
+        <input type="hidden" name="tags" value="1040406">
+        <div class="waitlist-hp" aria-hidden="true">
+          <input type="text" name="b_7f640e539e50d4f6eb8822540_b352108053" tabindex="-1" value="">
+        </div>
+        <button type="submit" name="subscribe">Send</button>
+      </form>
+      <p class="waitlist-note">We never share your email. Unsubscribe at any time.</p>
     </div>
   </div>
 </section>
